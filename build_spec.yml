@@ -58,7 +58,7 @@ steps:
     timeoutInSeconds: 600
     name: "NPM install"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/api
+      cd ${OCI_WORKSPACE_DIR}
       npm install
     onFailure:
       - type: Command
@@ -72,8 +72,8 @@ steps:
     timeoutInSeconds: 1200
     name: "Run Tests"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/api
-      npm test
+      cd ${OCI_WORKSPACE_DIR}
+      npm run test
     onFailure:
       - type: Command
         command: |
@@ -86,8 +86,8 @@ steps:
     timeoutInSeconds: 1200
     name: "Build application"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/api
-      npm build-prod
+      cd ${OCI_WORKSPACE_DIR}
+      npm run build-prod
     onFailure:
       - type: Command
         command: |
@@ -95,11 +95,17 @@ steps:
           echo "Failure successfully handled"
         timeoutInSeconds: 40
         runAs: root
+  - type: Command
+      timeoutInSeconds: 1200
+      name: "Build container image"
+      command: |
+        cd ${OCI_WORKSPACE_DIR}
+        docker build --pull --rm -t conv-man-api .
 
 
 outputArtifacts:
-  - name: build_artifacts_dev
+  - name: conv-man-api-dev
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
-    location: api:latest
+    location: conv-man-api:latest
