@@ -5,9 +5,10 @@
   "main": "./build/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register spec/**/*.spec.ts",
-    "start": "nodemon -w src --ext ts --exec ts-node ./src/index.ts",
+    "start-dev": "nodemon -w src --ext ts --exec ts-node ./src/index.ts",
     "build-prod": "rm -rf ./build && tsc -p tsconfig.prod.json",
-    "build": "rm -rf ./build && tsc -p tsconfig.json"
+    "build": "rm -rf ./build && tsc -p tsconfig.json",
+    "start": "node index.js"
   },
   "author": "Jonathan Stevenson",
   "license": "ISC",
