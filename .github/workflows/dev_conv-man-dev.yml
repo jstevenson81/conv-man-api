@@ -34,6 +34,7 @@ jobs:
           path:
             - ./build
             - ./package.json
+            - ./node_modules
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,5 +57,3 @@ jobs:
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F469C35649224C3FABB4F3CF44D0F5A5 }}
           package: .
-      - name: npm install
-          run: npm install
