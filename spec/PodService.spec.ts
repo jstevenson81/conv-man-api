@@ -8,34 +8,39 @@ import { ServerConfig } from "../src/http/ServerConfig";
 describe("Pod Service Tests", () => {
   chai.should();
 
-  it("Should get all pods", async () => {
+  it("Should get all pods", (done) => {
     const svc = new PodService({
-      baseUrl: "https://etvwbwij8jdtzoz-hcmconversion1.adb.us-phoenix-1.oraclecloudapps.com/ords/admin/",
+      baseUrl: ServerConfig.ords.url,
       entity: "uxpods/",
     });
-    const response = await svc.getAllPods();
-    response.should.not.be.undefined;
-    response.error.code.should.equal("");
-    response.collection.items.should.not.be.empty;
-    response.collection.count.should.be.greaterThan(0);
-  });
+    svc.getAllPods().then((response) => {
+      response.should.not.be.undefined;
+      response.error.code.should.equal("");
+      response.collection.items.should.not.be.empty;
+      response.collection.count.should.be.greaterThan(0);
+      done();
+    });
+  }).timeout(4000);
 
-  it("Should get one pod", async () => {
+  it("Should get one pod", (done) => {
     const svc = new PodService({
-      baseUrl: "https://etvwbwij8jdtzoz-hcmconversion1.adb.us-phoenix-1.oraclecloudapps.com/ords/admin/",
+      baseUrl: ServerConfig.ords.url,
       entity: ServerConfig.ords.pod,
     });
-    const allPods = await svc.getAllPods();
-    const response = await svc.getOnePod(allPods.collection.items[0].ux_pod_id);
-    response.item.should.not.be.undefined;
-    response.item.should.haveOwnProperty("ux_pod_id");
-    response.item.ux_pod_id.should.equal(allPods.collection.items[0].ux_pod_id);
-  });
+    svc.getAllPods().then((res) => {
+      svc.getOnePod(res.collection.items[0].ux_pod_id).then((response) => {
+        response.item.should.not.be.undefined;
+        response.item.should.haveOwnProperty("ux_pod_id");
+        response.item.ux_pod_id.should.equal(res.collection.items[0].ux_pod_id);
+        done();
+      });
+    });
+  }).timeout(4000);
 
   it("Should add a pod", async () => {
     const uniqueId = uuidv4();
     const svc = new PodService({
-      baseUrl: "https://etvwbwij8jdtzoz-hcmconversion1.adb.us-phoenix-1.oraclecloudapps.com/ords/admin/",
+      baseUrl: ServerConfig.ords.url,
       entity: "uxpods/",
     });
     const response = await svc.add<IUxPod>({
@@ -50,7 +55,7 @@ describe("Pod Service Tests", () => {
 
   it("Should error when a pod url exists", async () => {
     const svc = new PodService({
-      baseUrl: "https://etvwbwij8jdtzoz-hcmconversion1.adb.us-phoenix-1.oraclecloudapps.com/ords/admin/",
+      baseUrl: ServerConfig.ords.url,
       entity: "uxpods/",
     });
     const response = await svc.add<IUxPod>({
@@ -61,6 +66,5 @@ describe("Pod Service Tests", () => {
     });
     assert.isNotNull(response);
     assert.isNotEmpty(response.error);
-    console.log(response);
   });
 });
