@@ -106,8 +106,8 @@ export class ApiServer {
     // config express
     await this.configure();
     // start express
-    this.server = this.app.listen(this.port, () => {
-      console.log(`server started at http://localhost:${this.port}/graphql`);
+    this.server = this.app.listen(process.env.PORT, () => {
+      console.log(`server started at http://${process.env.WEBSITE_HOSTNAME}:${this.port}/graphql`);
     });
     console.log("Server has started!");
   }
