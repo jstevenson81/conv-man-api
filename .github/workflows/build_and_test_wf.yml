@@ -26,6 +26,8 @@ jobs:
           npm install
           npm run build-prod --if-present
           npm run test --if-present
+      - name: Zip artifacts for upload
+        run: zip node_modules.zip ./node_modules
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -33,5 +35,5 @@ jobs:
           name: node-app
           path: |
             ./dist/**
-            ./node_modules
+            ./node_modules.zip
             ./package.json
