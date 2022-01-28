@@ -32,6 +32,6 @@ jobs:
         with:
           name: node-app
           path: |
-            ./dist/**/*
+            ./dist/**
             ./node_modules
             ./package.json
