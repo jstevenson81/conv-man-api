@@ -34,6 +34,7 @@ jobs:
           path:
             - ./build
             - ./package.json
+            - ./node_modules
 
   deploy:
     runs-on: ubuntu-latest
