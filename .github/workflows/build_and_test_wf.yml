@@ -28,7 +28,7 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifacts for upload
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: dist/** node_modules/** package.json
           dest: api.zip
