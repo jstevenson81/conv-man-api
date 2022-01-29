@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -26,14 +26,15 @@ jobs:
           npm install
           npm run build-prod --if-present
           npm run test --if-present
+
       - name: Zip artifacts for upload
-        run: zip node_modules.zip ./node_modules
+        uses: papeloto/action-zip@v1
+        with:
+          files: dist/** node_modules/** package.json
+          dest: api.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: |
-            ./dist/**
-            ./node_modules.zip
-            ./package.json
+          path: api.zip
