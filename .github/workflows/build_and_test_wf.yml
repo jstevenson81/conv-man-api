@@ -27,17 +27,23 @@ jobs:
           npm run build-prod --if-present
           npm run test --if-present
 
-      - name: Zip artifacts for upload
+      - name: Zip node_modules for upload
         uses: vimtor/action-zip@v1
         with:
           files: node_modules/
           dest: node_modules.zip
+
+      - name: Zip dist for upload
+        uses: vimtor/action-zip@v1
+        with:
+          files: dist/
+          dest: dist.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
           path: |
-            ./dist/**
+            ./dist.zip
             ./node_modules.zip
             ./package.json
