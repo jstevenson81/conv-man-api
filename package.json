@@ -2,7 +2,7 @@
   "name": "conversion-manager-api",
   "version": "1.0.0",
   "description": "This is the mediation point for all data to and from the application",
-  "main": "./build/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register spec/**/*.spec.ts",
     "start-dev": "nodemon -w src --ext ts --exec ts-node ./src/index.ts",
