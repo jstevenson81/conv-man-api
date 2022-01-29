@@ -58,7 +58,7 @@ jobs:
           args: unzip -qq api-artifact.zip -d .
 
       - name: Copy dist to root
-        run: cp -R ./dist .
+        run: cp -R ./dist/* .
 
       - name: Delete dist
         run: rm -rf ./dist
