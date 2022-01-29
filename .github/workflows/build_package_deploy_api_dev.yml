@@ -57,11 +57,8 @@ jobs:
         with:
           args: unzip -qq api-artifact.zip -d .
 
-      - name: Copy dist to root
-        run: cp -R ./dist/* .
-
-      - name: Delete dist
-        run: rm -rf ./dist
+      - name: move dist to the root directory
+        run: mv ./dist/* .
 
       - name: "Deploy to Azure Web App"
         uses: azure/webapps-deploy@v2
