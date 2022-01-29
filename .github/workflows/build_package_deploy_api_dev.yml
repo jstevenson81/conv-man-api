@@ -31,7 +31,7 @@ jobs:
         uses: montudor/action-zip@v1
 
       - name: Zip api for upload
-        run: zip -qq -r api-artifact.zip dist node_modules package.json
+        run: zip -qq -r api-artifact.zip dist node_modules package.json web.config
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
